@@ -15,9 +15,6 @@ const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 const chatId = process.env.TG_CHAT_ID;
 let lastSentTrains: Train[] | null = null;
 
-// const message = New info about trains: ...
-// bot.telegram.sendMessage(chatId, message)
-
 const checkAndSendTrains = async () => {
   try {
     const trainData = await fetchTrains();
@@ -39,9 +36,6 @@ const checkAndSendTrains = async () => {
       const carriagesInfo = train.carriages.map(car => `  - Carriage ${car.number}: ${car.freeSeats} free seats`).join('\n');
       return `Train ${train.number} (${train.departureDate} -> ${train.arrivalDate}):\n${carriagesInfo}`;
     }).join('\n\n');
-    console.log({parsedTrains});
-    console.log({trainData});
-    console.log({currentTrains});
     await bot.telegram.sendMessage(chatId, message);
 
     // Update last sent trains
@@ -53,5 +47,5 @@ const checkAndSendTrains = async () => {
 };
 
 checkAndSendTrains();
-// // Run the function every 30 minutes
-// setInterval(checkAndSendTrains, 30 * 60 * 1000);
+// Run the function every 30 minutes
+setInterval(checkAndSendTrains, 30 * 60 * 1000);

@@ -5,8 +5,7 @@ interface ParsedTrain extends Pick<Train, 'number' | 'departureDate' | 'arrivalD
 }
 
 const parseBy = {
-  // brand: "Afrosiyob",
-  brand: "Sharq",
+  brand: "Afrosiyob",
 }
 
 export const parseTrains = (trains: Train[]): ParsedTrain[] => {
