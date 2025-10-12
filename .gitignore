@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+.pnpm-store/ # If virtual-store-dir is set to .pnpm-store
+.pnpm-debug.log
+
+# Lockfile
+pnpm-lock.yaml # Consider adding this to .gitignore in monorepos or if using git-branch-lockfile
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Editor and IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+.env
