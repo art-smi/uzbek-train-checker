@@ -8,7 +8,7 @@ RUN npm install -g pnpm
 COPY package*.json ./
 COPY pnpm-lock.yaml ./
 
-RUN pnpm install --prod
+RUN pnpm install
 
 COPY . .
 
