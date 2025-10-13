@@ -14,10 +14,14 @@ if (!process.env.TELEGRAM_TOKEN || !process.env.TG_CHAT_ID) {
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 const chatId = process.env.TG_CHAT_ID;
 let lastSentTrains: Train[] | null = null;
+let errorsCount = 0;
+const maxErrors = 5;
+const retryDelayMinutes = 10;
 
 const checkAndSendTrains = async () => {
   try {
     const trainData = await fetchTrains();
+    errorsCount = 0; // Reset error count on success
     const currentTrains = trainData?.data?.directions?.forward?.trains;
 
     // Compare with last sent trains
@@ -43,9 +47,16 @@ const checkAndSendTrains = async () => {
     console.log("Train data sent successfully.");
   } catch (error: any) {
     console.error("Error fetching or sending train data:", error?.message);
+    errorsCount++;
+    if (errorsCount >= maxErrors) {
+      console.error(`Exceeded maximum error limit of ${maxErrors}. Send notification and reset counter.`);
+      const message = `Got ${maxErrors} errors in a row: ${error?.message}.`;
+      await bot.telegram.sendMessage(chatId, message);
+      errorsCount = 0; // Reset error count after notification
+    }
   }
 };
 
 checkAndSendTrains();
 // Run the function every 30 minutes
-setInterval(checkAndSendTrains, 30 * 60 * 1000);
+setInterval(checkAndSendTrains, retryDelayMinutes * 60 * 1000);
