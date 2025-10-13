@@ -19,6 +19,8 @@ const maxErrors = 5;
 const retryDelayMinutes = 5;
 
 const checkAndSendTrains = async () => {
+  const timePrefix = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  const log = (message: string) => console.log(`${timePrefix} : ${message}`);
   try {
     const trainData = await fetchTrains();
     errorsCount = 0; // Reset error count on success
@@ -26,14 +28,14 @@ const checkAndSendTrains = async () => {
 
     // Compare with last sent trains
     if (JSON.stringify(currentTrains) === JSON.stringify(lastSentTrains)) {
-      console.log("No changes in train data. Skipping message.");
+      log("No changes in train data. Skipping message.");
       return;
     }
 
     // Parse and send message
     const parsedTrains = parseTrains(currentTrains);
     if (parsedTrains.length === 0) {
-      console.log("No trains available after parsing. Skipping message.");
+      log("No trains available after parsing. Skipping message.");
       return;
     }
     const message = `New info about trains:\n` + parsedTrains.map(train => {
@@ -44,12 +46,12 @@ const checkAndSendTrains = async () => {
 
     // Update last sent trains
     lastSentTrains = currentTrains;
-    console.log("Train data sent successfully.");
+    log("Train data sent successfully.");
   } catch (error: any) {
     console.error("Error fetching or sending train data:", error?.message);
     errorsCount++;
     if (errorsCount >= maxErrors) {
-      console.error(`Exceeded maximum error limit of ${maxErrors}. Send notification and reset counter.`);
+      log(`Exceeded maximum error limit of ${maxErrors}. Send notification and reset counter.`);
       const message = `Got ${maxErrors} errors in a row: ${error?.message}.`;
       await bot.telegram.sendMessage(chatId, message);
       errorsCount = 0; // Reset error count after notification
