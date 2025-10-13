@@ -16,7 +16,7 @@ const chatId = process.env.TG_CHAT_ID;
 let lastSentTrains: Train[] | null = null;
 let errorsCount = 0;
 const maxErrors = 5;
-const retryDelayMinutes = 10;
+const retryDelayMinutes = 5;
 
 const checkAndSendTrains = async () => {
   try {
