@@ -37,7 +37,7 @@ Copy `.env.example` to `.env` and fill values:
 - DEP_STATION_CODE
 - ARV_STATION_CODE
 - TRAIN_BRAND (Sharq or Afrosiyob)
-- MIN_AVAILABLE_SEATS — minimum number of available seats required in at least one car to include the train in results (default: 2)
+- MIN_AVAILABLE_SEATS — minimum number of available seats required in at least one car to include the train in results (default: 1)
 - TELEGRAM_TOKEN
 - TG_CHAT_ID
 - RETRY_DELAY_MINUTES — polling interval in minutes (default: 5)
