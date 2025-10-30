@@ -1,6 +1,25 @@
 # Uzbek Train Checker
 
-A small utility to check Uzbek train availability and send notifications (Telegram). Configure via environment variables and run locally or inside a Docker container.
+A simple Telegram bot that notifies about available train carriages and free seats.
+
+Example message a user will receive in the Telegram chat:
+
+```text
+New info about trains:
+Train 765Ф (03.11.2025 17:40 -> 03.11.2025 20:07):
+  - Carriage 1 (Сидячий): 1 free seats
+
+Train 767Ф (03.11.2025 18:15 -> 03.11.2025 20:30):
+  - Carriage 1 (Сидячий): 1 free seats
+
+Train 763Ф (03.11.2025 18:49 -> 03.11.2025 21:04):
+  - Carriage 1 (Сидячий): 26 free seats
+```
+
+Usage:
+- Set the environment variables TELEGRAM_TOKEN and TG_CHAT_ID.
+- Optionally set RETRY_DELAY_MINUTES to change polling interval (default 5 minutes).
+- Run the project to start receiving updates in the specified Telegram chat.
 
 ## Features
 - Periodic checks for train availability
