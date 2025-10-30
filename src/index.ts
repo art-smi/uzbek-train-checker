@@ -4,6 +4,7 @@ import { Telegraf } from "telegraf";
 import { fetchTrains } from "./fetchTrains";
 import { Train } from "./types";
 import { parseTrains } from "./parseTrains";
+import { initCsrfToken } from "./csrf";
 
 if (!process.env.TELEGRAM_TOKEN || !process.env.TG_CHAT_ID) {
   throw new Error("missing env variables");
@@ -68,6 +69,20 @@ const checkAndSendTrains = async () => {
   }
 };
 
-checkAndSendTrains();
-// Run the function every retryDelayMinutes minutes
-setInterval(checkAndSendTrains, retryDelayMinutes * 60 * 1000);
+// initialize on startup
+(async () => {
+  try {
+    await initCsrfToken();
+    console.log("CSRF token initialized");
+  } catch (err) {
+    console.error("Failed to initialize CSRF token:", err);
+  }
+
+  try {
+    await checkAndSendTrains();
+    // Run the function every retryDelayMinutes minutes
+    setInterval(checkAndSendTrains, retryDelayMinutes * 60 * 1000);
+  } catch (err) {
+    console.error("Failed to initialize CSRF token:", err);
+  }
+})();

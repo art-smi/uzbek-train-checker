@@ -1,16 +1,17 @@
 import { TrainResponse } from "./types";
+import { getCsrfToken } from "./csrf";
 
 export const fetchTrains = async (): Promise<TrainResponse> => {
-  // Read values from environment
-  const XSRF_TOKEN = process.env.XSRF_TOKEN;
+  // read token from in-memory store populated at init
+  const XSRF_TOKEN = getCsrfToken();
   const TRAIN_DATE = process.env.TRAIN_DATE;
   const DEP_STATION_CODE = process.env.DEP_STATION_CODE;
   const ARV_STATION_CODE = process.env.ARV_STATION_CODE;
 
-  // Validate required env vars
+  // Validate required config
   if (!XSRF_TOKEN || !TRAIN_DATE || !DEP_STATION_CODE || !ARV_STATION_CODE) {
     throw new Error(
-      "Missing required environment variables. Ensure XSRF_TOKEN, TRAIN_DATE, DEP_STATION_CODE and ARV_STATION_CODE are set."
+      "Missing required configuration. Ensure CSRF/XSRF token is initialized and TRAIN_DATE, DEP_STATION_CODE and ARV_STATION_CODE are set."
     );
   }
 
@@ -37,9 +38,9 @@ export const fetchTrains = async (): Promise<TrainResponse> => {
       "sec-fetch-dest": "empty",
       "sec-fetch-mode": "cors",
       "sec-fetch-site": "same-origin",
-      // inject XSRF token from env
+      // inject XSRF token from in-memory store
       "x-xsrf-token": XSRF_TOKEN,
-      // minimal cookie including token; keep other cookie parts out of source-controlled code
+      // minimal cookie including token
       "cookie": `XSRF-TOKEN=${XSRF_TOKEN}`
     },
     "body": body,

@@ -14,7 +14,6 @@ A small utility to check Uzbek train availability and send notifications (Telegr
 ## Environment
 Copy `.env.example` to `.env` and fill values:
 
-- XSRF_TOKEN
 - TRAIN_DATE
 - DEP_STATION_CODE
 - ARV_STATION_CODE
@@ -26,7 +25,6 @@ Copy `.env.example` to `.env` and fill values:
 Example:
 ```
 # .env
-XSRF_TOKEN=...
 TRAIN_DATE=2025-11-01
 DEP_STATION_CODE=...
 ARV_STATION_CODE=...
@@ -75,7 +73,6 @@ docker run --rm --env-file .env uzbek-train-checker
 2b. Alternatively, pass all required environment variables directly via multiple `-e` flags:
 ```
 docker run --rm \
-  -e XSRF_TOKEN="..." \
   -e TRAIN_DATE="2025-11-01" \
   -e DEP_STATION_CODE="..." \
   -e ARV_STATION_CODE="..." \
