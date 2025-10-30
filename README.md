@@ -27,7 +27,7 @@ Usage:
 - Configurable train brand, stations and date via environment variables
 
 ## Prerequisites
-- Docker (for containerized runs) or the runtime used by the project (e.g., Node.js / Python) if running locally
+- Docker (for containerized runs) or Node.js + pnpm if running locally
 - A Telegram bot token and chat ID for notifications
 
 ## Environment
