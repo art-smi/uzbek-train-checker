@@ -1,11 +1,9 @@
+import 'dotenv/config';
 import { Telegraf } from "telegraf";
-import dotenv from 'dotenv';
 
 import { fetchTrains } from "./fetchTrains";
 import { Train } from "./types";
 import { parseTrains } from "./parseTrains";
-
-dotenv.config();
 
 if (!process.env.TELEGRAM_TOKEN || !process.env.TG_CHAT_ID) {
   throw new Error("missing env variables");
@@ -16,7 +14,18 @@ const chatId = process.env.TG_CHAT_ID;
 let lastSentTrains: Train[] | null = null;
 let errorsCount = 0;
 const maxErrors = 5;
-const retryDelayMinutes = 5;
+
+// previous hardcoded retryDelayMinutes moved to env
+const defaultRetryMinutes = 5;
+let retryDelayMinutes = defaultRetryMinutes;
+if (process.env.RETRY_DELAY_MINUTES) {
+  const parsed = parseInt(process.env.RETRY_DELAY_MINUTES, 10);
+  if (!Number.isNaN(parsed) && parsed > 0) {
+    retryDelayMinutes = parsed;
+  } else {
+    console.warn(`Invalid RETRY_DELAY_MINUTES="${process.env.RETRY_DELAY_MINUTES}", falling back to ${defaultRetryMinutes} minutes.`);
+  }
+}
 
 const checkAndSendTrains = async () => {
   const timePrefix = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
@@ -60,5 +69,5 @@ const checkAndSendTrains = async () => {
 };
 
 checkAndSendTrains();
-// Run the function every 30 minutes
+// Run the function every retryDelayMinutes minutes
 setInterval(checkAndSendTrains, retryDelayMinutes * 60 * 1000);

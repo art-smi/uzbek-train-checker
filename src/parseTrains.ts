@@ -4,8 +4,14 @@ interface ParsedTrain extends Pick<Train, 'number' | 'departureDate' | 'arrivalD
   carriages: Array<{ number: string; freeSeats: number }>;
 }
 
+// Read brand from env and validate
+const TRAIN_BRAND = process.env.TRAIN_BRAND;
+if (!TRAIN_BRAND) {
+  throw new Error("Missing required environment variable: TRAIN_BRAND");
+}
+
 const parseBy = {
-  brand: "Afrosiyob",
+  brand: TRAIN_BRAND,
 }
 
 export const parseTrains = (trains: Train[]): ParsedTrain[] => {
