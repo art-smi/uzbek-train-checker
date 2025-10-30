@@ -13,7 +13,7 @@ if (!TRAIN_BRAND) {
 // Read minimum available seats from env (default to 1 if not specified)
 const MIN_AVAILABLE_SEATS = process.env.MIN_AVAILABLE_SEATS
   ? parseInt(process.env.MIN_AVAILABLE_SEATS, 10)
-  : 2;
+  : 1;
 
 const parseBy = {
   brand: TRAIN_BRAND,
