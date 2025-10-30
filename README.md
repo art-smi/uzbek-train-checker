@@ -36,6 +36,30 @@ TG_CHAT_ID=987654321
 RETRY_DELAY_MINUTES=5
 ```
 
+## Stations and IDs
+Please use the following station IDs exactly as listed:
+
+| Station | ID |
+|---|---:|
+| Tashkent | 2900000 |
+| Tashkent North | 2900001 |
+| Tashkent South | 2900002 |
+| Samarkand | 2900700 |
+| Bukhara | 2900800 |
+| Khiva | 2900172 |
+| Urgench | 2900790 |
+| Nukus | 2900970 |
+| Navoi | 2900930 |
+| Andijan | 2900680 |
+| Karshi | 2900750 |
+| Jizzakh | 2900720 |
+| Termez | 2900255 |
+| Gulistan | 2900850 |
+| Qo'qon | 2900880 |
+| Margilon | 2900920 |
+| Pop | 2900693 |
+| Namangan | 2900940 |
+
 ## Run with Docker
 
 1. Build the Docker image from the project root (assumes a Dockerfile exists in the repo):
