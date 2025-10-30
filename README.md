@@ -37,6 +37,7 @@ Copy `.env.example` to `.env` and fill values:
 - DEP_STATION_CODE
 - ARV_STATION_CODE
 - TRAIN_BRAND (Sharq or Afrosiyob)
+- MIN_AVAILABLE_SEATS — minimum number of available seats required in at least one car to include the train in results (default: 1)
 - TELEGRAM_TOKEN
 - TG_CHAT_ID
 - RETRY_DELAY_MINUTES — polling interval in minutes (default: 5)
@@ -48,6 +49,7 @@ TRAIN_DATE=2025-11-01
 DEP_STATION_CODE=...
 ARV_STATION_CODE=...
 TRAIN_BRAND=Afrosiyob
+MIN_AVAILABLE_SEATS=1
 TELEGRAM_TOKEN=123456:ABC-DEF...
 TG_CHAT_ID=987654321
 RETRY_DELAY_MINUTES=5
@@ -126,4 +128,3 @@ docker run --rm \
      ```
      - Personal chat ids are positive integers.
      - Group chat ids are usually negative; channel ids may start with -100.
-
