@@ -103,3 +103,27 @@ docker run --rm \
 ```
 - Use this when you want to set or override specific variables at runtime.
 - For many variables or secrets, `--env-file .env` is usually simpler and less error-prone.
+
+## Telegram bot token and chat ID
+
+- Obtain a bot token:
+  - Create a bot via BotFather and obtain the token. Official docs: https://core.telegram.org/bots/tutorial#obtain-your-bot-token
+  - The token looks like: 123456:ABC-DEF...
+
+- Get your TG_CHAT_ID (personal chat or group):
+  1. Start a conversation with your bot in Telegram and send any message (press "Start" for personal chat).
+  2. Use the getUpdates API to inspect recent updates and find your chat id. Replace <TELEGRAM_TOKEN> with your token:
+     ```
+     curl -s "https://api.telegram.org/bot<TELEGRAM_TOKEN>/getUpdates"
+     ```
+     Or open the same URL in your browser (replace <TELEGRAM_TOKEN> and press Enter) to view the JSON response:
+     ```
+     https://api.telegram.org/bot<TELEGRAM_TOKEN>/getUpdates
+     ```
+     Look in the JSON for "message" -> "chat" -> "id". That numeric id is your TG_CHAT_ID. Example JSON fragment:
+     ```
+     "chat": { "id": 987654321, "first_name": "...", "type": "private" }
+     ```
+     - Personal chat ids are positive integers.
+     - Group chat ids are usually negative; channel ids may start with -100.
+
