@@ -10,7 +10,7 @@ if (!TRAIN_BRAND) {
   throw new Error("Missing required environment variable: TRAIN_BRAND");
 }
 
-// Read minimum available seats from env (default to 2 if not specified)
+// Read minimum available seats from env (default to 1 if not specified)
 const MIN_AVAILABLE_SEATS = process.env.MIN_AVAILABLE_SEATS
   ? parseInt(process.env.MIN_AVAILABLE_SEATS, 10)
   : 2;
